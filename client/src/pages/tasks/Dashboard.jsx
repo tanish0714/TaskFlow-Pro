@@ -1,22 +1,62 @@
+import { useEffect, useState } from "react";
+
 import DashboardLayout from "../../components/layout/DashboardLayout";
 
+import { getTaskStatsApi } from "../../api/taskApi";
+
 const Dashboard = () => {
+
+  const [statsData, setStatsData] = useState({
+    totalTasks: 0,
+    completedTasks: 0,
+    pendingTasks: 0,
+    inProgressTasks: 0,
+  });
+
+  useEffect(() => {
+
+    fetchStats();
+
+  }, []);
+
+  const fetchStats = async () => {
+
+    try {
+
+      const data = await getTaskStatsApi();
+
+      setStatsData(data);
+
+    } catch (error) {
+
+      console.log(error);
+    }
+  };
+
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
 
   const stats = [
     {
       title: "Total Tasks",
-      value: "24",
+      value: statsData.totalTasks,
       color: "from-blue-500 to-cyan-500",
     },
     {
       title: "Completed",
-      value: "18",
+      value: statsData.completedTasks,
       color: "from-green-500 to-emerald-500",
     },
     {
       title: "Pending",
-      value: "6",
+      value: statsData.pendingTasks,
       color: "from-orange-500 to-yellow-500",
+    },
+    {
+      title: "In Progress",
+      value: statsData.inProgressTasks,
+      color: "from-purple-500 to-pink-500",
     },
   ];
 
@@ -28,7 +68,11 @@ const Dashboard = () => {
         <div className="mb-8">
 
           <h1 className="text-4xl font-bold text-white mb-2">
-            Welcome Back 👋
+            Welcome Back,
+            {" "}
+            {user?.fullname || "User"}
+            {" "}
+            👋
           </h1>
 
           <p className="text-slate-400">
@@ -37,7 +81,7 @@ const Dashboard = () => {
 
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
           {stats.map((item) => (
 
@@ -67,44 +111,42 @@ const Dashboard = () => {
         <div className="mt-10 bg-slate-900 border border-slate-800 rounded-3xl p-8">
 
           <h2 className="text-2xl font-semibold text-white mb-6">
-            Recent Activity
+            Productivity Overview
           </h2>
 
-          <div className="space-y-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            <div className="flex items-center justify-between bg-slate-800 p-4 rounded-2xl">
+            <div className="bg-slate-800 rounded-2xl p-6">
 
-              <div>
-                <p className="text-white font-medium">
-                  New task assigned
-                </p>
+              <p className="text-slate-400 mb-3">
+                Completed Rate
+              </p>
 
-                <p className="text-slate-400 text-sm">
-                  Landing page redesign
-                </p>
-              </div>
-
-              <span className="text-blue-400 text-sm">
-                2 min ago
-              </span>
+              <h2 className="text-4xl font-bold text-green-400">
+                {
+                  statsData.totalTasks > 0
+                    ? Math.round(
+                        (
+                          statsData.completedTasks /
+                          statsData.totalTasks
+                        ) * 100
+                      )
+                    : 0
+                }
+                %
+              </h2>
 
             </div>
 
-            <div className="flex items-center justify-between bg-slate-800 p-4 rounded-2xl">
+            <div className="bg-slate-800 rounded-2xl p-6">
 
-              <div>
-                <p className="text-white font-medium">
-                  Task completed
-                </p>
+              <p className="text-slate-400 mb-3">
+                Pending Tasks
+              </p>
 
-                <p className="text-slate-400 text-sm">
-                  API integration
-                </p>
-              </div>
-
-              <span className="text-green-400 text-sm">
-                1 hour ago
-              </span>
+              <h2 className="text-4xl font-bold text-orange-400">
+                {statsData.pendingTasks}
+              </h2>
 
             </div>
 
