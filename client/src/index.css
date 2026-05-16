@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* index.css */
+/* index.css */
+html, body {
+  height: 100%;
+  overflow: hidden;   /* 👈 ye screen ko fix kar dega */
+  margin: 0;
+  padding: 0;
+}
+
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
