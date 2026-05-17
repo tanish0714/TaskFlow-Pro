@@ -79,10 +79,13 @@ const CreateTask = () => {
         "dueDate",
         formData.dueDate
       );
-      taskData.append(
-  "assignedTo",
-  formData.assignedTo
-);
+   if (formData.assignedTo) {
+
+  taskData.append(
+    "assignedTo",
+    formData.assignedTo
+  );
+}
 
       for (
         let i = 0;
