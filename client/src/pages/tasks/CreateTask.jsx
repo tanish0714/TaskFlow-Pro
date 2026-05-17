@@ -44,7 +44,7 @@ const CreateTask = () => {
 
     const data = await getUsersApi();
 
-    setUsers(data);
+    setUsers(data.filteredUsers);
 
   } catch (error) {
 
