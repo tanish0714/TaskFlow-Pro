@@ -15,9 +15,15 @@ const Dashboard = () => {
 
   useEffect(() => {
 
-    fetchStats();
+  const user = localStorage.getItem(
+    "user"
+  );
 
-  }, []);
+  if (user) {
+    fetchStats();
+  }
+
+}, []);
 
   const fetchStats = async () => {
 
