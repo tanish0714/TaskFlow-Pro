@@ -16,15 +16,18 @@ export const createTask = async (req, res) => {
       (file) => file.path
     )
   : [];
-    const newTask = new Task({
-      title,
-      description,
-      priority,
-      dueDate,
-      assignedTo,
-      attachments,
-      createdBy: req.user._id,
-    });
+   const newTask = new Task({
+  title,
+  description,
+  priority,
+  dueDate,
+  attachments,
+  createdBy: req.user._id,
+
+  ...(assignedTo && {
+    assignedTo,
+  }),
+});
 
     await newTask.save();
 
