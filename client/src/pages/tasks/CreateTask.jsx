@@ -1,8 +1,8 @@
 import { useState } from "react";
+
 import DashboardLayout from "../../components/layout/DashboardLayout";
+
 import { createTaskApi } from "../../api/taskApi";
-import { useEffect } from "react";
-import { getUsersApi } from "../../api/userApi";
 
 const CreateTask = () => {
 
@@ -12,14 +12,7 @@ const CreateTask = () => {
     priority: "medium",
     dueDate: "",
     attachments: [],
-    assignedTo: "",
   });
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-
-  fetchUsers();
-
-}, []);
 
   const handleChange = (e) => {
 
@@ -38,19 +31,6 @@ const CreateTask = () => {
       });
     }
   };
-  const fetchUsers = async () => {
-
-  try {
-
-    const data = await getUsersApi();
-    console.log(data);
-    setUsers(data.filteredUsers);
-
-  } catch (error) {
-
-    console.log(error);
-  }
-};
 
   const handleSubmit = async (e) => {
 
@@ -79,13 +59,6 @@ const CreateTask = () => {
         "dueDate",
         formData.dueDate
       );
-   if (formData.assignedTo) {
-
-  taskData.append(
-    "assignedTo",
-    formData.assignedTo
-  );
-}
 
       for (
         let i = 0;
@@ -113,14 +86,16 @@ const CreateTask = () => {
         priority: "medium",
         dueDate: "",
         attachments: [],
-          assignedTo: "",
       });
 
     } catch (error) {
 
       console.log(error);
 
-      alert("Failed to create task");
+      alert(
+        error.response?.data?.error ||
+        "Failed to create task"
+      );
     }
   };
 
@@ -180,7 +155,7 @@ const CreateTask = () => {
 
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <div>
 
@@ -210,45 +185,12 @@ const CreateTask = () => {
               </select>
 
             </div>
-            <div>
-
-  <label className="block text-slate-300 mb-2">
-    Assign User
-  </label>
-
-  <select
-    name="assignedTo"
-    value={formData.assignedTo}
-    onChange={handleChange}
-    className="w-full bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3 text-white outline-none focus:border-blue-500"
-  >
-
-    <option value="">
-      Select User
-    </option>
-
-    {
-      users?.map((user) => (
-
-        <option
-          key={user._id}
-          value={user._id}
-        >
-          {user.fullname}
-        </option>
-      ))
-    }
-
-  </select>
-
-</div>
 
             <div>
 
               <label className="block text-slate-300 mb-2">
                 Due Date
               </label>
-              
 
               <input
                 type="date"
