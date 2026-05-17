@@ -43,7 +43,7 @@ const CreateTask = () => {
   try {
 
     const data = await getUsersApi();
-
+    console.log(data);
     setUsers(data.filteredUsers);
 
   } catch (error) {

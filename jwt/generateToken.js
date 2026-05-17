@@ -15,21 +15,17 @@ const createTokenAndSaveCookie = (
 
   res.cookie("jwt", token, {
 
-  httpOnly: true,
+    httpOnly: true,
 
-  secure:
-    process.env.NODE_ENV ===
-    "production",
+    secure: true,
 
-  sameSite:
-    process.env.NODE_ENV ===
-    "production"
-      ? "none"
-      : "lax",
+    sameSite: "none",
 
-  maxAge:
-    10 * 24 * 60 * 60 * 1000,
-});
+    path: "/",
+
+    maxAge:
+      10 * 24 * 60 * 60 * 1000,
+  });
 };
 
 export default createTokenAndSaveCookie;

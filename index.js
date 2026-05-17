@@ -26,11 +26,11 @@ app.use(
 );
 // CORS config
 app.use(cors({
-  origin: [
-    "http://localhost:3001",
-    "https://taskflowpro-chi.vercel.app"
-  ],
-  credentials: true
+
+  origin:
+    "https://taskflowpro-chi.vercel.app",
+
+  credentials: true,
 }));
 
 // Connect to DB
