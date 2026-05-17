@@ -220,19 +220,23 @@ const CreateTask = () => {
     className="w-full bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3 text-white outline-none focus:border-blue-500"
   >
 
-    <option value="">
-      Select User
-    </option>
+   <option
+  value=""
+  className="bg-slate-800 text-white"
+>
+  Select User
+</option>
 
     {
       users?.map((user) => (
 
-        <option
-          key={user._id}
-          value={user._id}
-        >
-          {user.fullname}
-        </option>
+       <option
+  key={user._id}
+  value={user._id}
+  className="bg-slate-800 text-white"
+>
+  {user.fullname}
+</option>
       ))
     }
 
